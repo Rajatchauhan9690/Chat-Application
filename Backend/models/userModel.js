@@ -4,7 +4,7 @@ const userModel = new mongoose.Schema(
   {
     fullName: {
       type: String,
-      required: True,
+      required: true,
     },
     username: {
       type: String,
