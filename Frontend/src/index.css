@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+body{
+  background: url(../public/pexels-pixabay-33109.jpg);
+  background-size:cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
