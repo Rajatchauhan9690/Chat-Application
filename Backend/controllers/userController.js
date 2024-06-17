@@ -1,24 +1,26 @@
 import { User } from "../models/userModel.js";
-import bcryptjs from "bcryptjs";
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+
 export const register = async (req, res) => {
   try {
     const { fullName, username, password, confirmPassword, gender } = req.body;
     if (!fullName || !username || !password || !confirmPassword || !gender) {
-      return res.status(400).json({ message: "All Fields are required" });
+      return res.status(400).json({ message: "All fields are required" });
     }
     if (password !== confirmPassword) {
-      return res.status(400).json({ message: "Password Do Not Match" });
+      return res.status(400).json({ message: "Password do not match" });
     }
+
     const user = await User.findOne({ username });
     if (user) {
       return res
         .status(400)
-        .json({ message: "username already exit try different" });
+        .json({ message: "Username already exit try different" });
     }
-    const hashedPassword = await bcryptjs.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    //profilePhoto
+    // profilePhoto
     const maleProfilePhoto = `https://avatar.iran.liara.run/public/boy?username=${username}`;
     const femaleProfilePhoto = `https://avatar.iran.liara.run/public/girl?username=${username}`;
 
@@ -41,19 +43,19 @@ export const login = async (req, res) => {
   try {
     const { username, password } = req.body;
     if (!username || !password) {
-      return res.status(400).json({ message: "all fields are required" });
+      return res.status(400).json({ message: "All fields are required" });
     }
     const user = await User.findOne({ username });
     if (!user) {
       return res.status(400).json({
-        mesage: "incorrect username or password",
+        message: "Incorrect username or password",
         success: false,
       });
     }
-    const isPasswordMatch = await bcryptjs.compare(password, user.password);
+    const isPasswordMatch = await bcrypt.compare(password, user.password);
     if (!isPasswordMatch) {
       return res.status(400).json({
-        mesage: "password do not match",
+        message: "Incorrect username or password",
         success: false,
       });
     }
@@ -78,7 +80,9 @@ export const login = async (req, res) => {
         fullName: user.fullName,
         profilePhoto: user.profilePhoto,
       });
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 };
 export const logout = (req, res) => {
   try {
