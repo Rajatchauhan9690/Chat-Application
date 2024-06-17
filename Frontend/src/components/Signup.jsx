@@ -56,7 +56,15 @@ function Signup() {
               <input type="checkbox" defaultChecked className="checkbox ml-2" />
             </div>
           </div>
-          <Link to="/login">Already have an account ,Please Login</Link>
+          <div className="w-full mx-auto flex items-center justify-center">
+            <p>Already have an account ,Please Login</p>
+            <Link to="/login"></Link>
+          </div>
+          <div className="flex items-center justify-center ">
+            <button className="btn btn-block btn-md mt-2 border border-slate-700">
+              SignUp
+            </button>
+          </div>
         </form>
       </div>
     </div>
