@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import toast from "react-hot-toast"
-import {BASE_URL} from "..";
+import toast from "react-hot-toast";
+
 function Signup() {
   const [user, setUser] = useState({
     fullName: "",
@@ -11,35 +11,52 @@ function Signup() {
     confirmPassword: "",
     gender: "",
   });
+  const navigate = useNavigate();
   const handleCheckbox = (gender) => {
     setUser({ ...user, gender });
   };
-  const onSubmitHandler = (e) => {
-    e.preventDefault()
-     try {
-      const res = await axios.post(`${BASE_URL}/api/v1/user/register`, user, {
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        withCredentials: true
-      });
-      if (res.data.success) {
+  const onSubmitHandler = async (e) => {
+    e.preventDefault();
+    try {
+      console.log(user);
+      const res = await axios.post(
+        `http://localhost:4000/api/v1/user/register`,
+        user,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+      if (res.data && res.data.success) {
         navigate("/login");
         toast.success(res.data.message);
+      } else {
+        toast.error("unexpected response from the server");
+        console.log("unexpected response:", res);
       }
     } catch (error) {
-      toast.error(error.response.data.message);
-      console.log(error);
+      if (error.response) {
+        console.log("Error response:", error.response);
+        toast.error(error.response.data.message || "An error occurred.");
+      } else if (error.request) {
+        console.log("Error request:", error.request);
+        toast.error("No response from the server.");
+      } else {
+        console.log("Error message:", error.message);
+        toast.error("Request setup error.");
+      }
     }
-      setUser({
+    setUser({
       fullName: "",
       username: "",
       password: "",
       confirmPassword: "",
       gender: "",
-    })
-  }
-  
+    });
+  };
+
   return (
     <div className="min-w-96 mx-auto">
       <div className="w-full p-4 rounded-xl shadow-md bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-100">
