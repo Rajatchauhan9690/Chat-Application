@@ -8,15 +8,15 @@ import { BASE_URL } from "..";
 const Settings = ({ toggleProfileVisibility }) => {
   const { authUser } = useSelector((store) => store.user);
   const [fullName, setFullName] = useState(authUser?.fullName || "");
-  const [email, setemail] = useState(authUser?.email || ""); // Corrected to lowercase 'email'
-  const [description, setdescription] = useState(authUser?.description || "");
+  const [email, setEmail] = useState(authUser?.email || "");
+  const [description, setDescription] = useState(authUser?.description || "");
   const dispatch = useDispatch();
 
   const saveChanges = async () => {
     try {
       const res = await axios.put(`${BASE_URL}/api/v1/user/update`, {
         fullName,
-        email, // Corrected to use 'email'
+        email,
         description,
       });
       toast.success("Profile updated successfully");
@@ -24,14 +24,26 @@ const Settings = ({ toggleProfileVisibility }) => {
       toggleProfileVisibility();
     } catch (error) {
       toast.error("Failed to update profile");
-      console.log(error);
+      console.error("Error updating profile:", error);
     }
   };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
       <div className="bg-white p-6 rounded-md w-96">
-        <h2 className="text-2xl mb-4">Profile Settings</h2>
+        {/* Profile Avatar Section */}
+        <div className="flex items-center mb-4">
+          <img
+            src={authUser?.profilePhoto || "default-avatar-url"}
+            alt="User Avatar"
+            className="w-16 h-16 rounded-full mr-4"
+          />
+          <div>
+            <h2 className="text-2xl">{authUser?.fullName || "Full Name"}</h2>
+          </div>
+        </div>
+
+        {/* Profile Settings Form */}
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700">
             Full Name
@@ -45,22 +57,22 @@ const Settings = ({ toggleProfileVisibility }) => {
         </div>
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700">
-            email
+            Email
           </label>
           <input
             type="text"
             value={email}
-            onChange={(e) => setemail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
             className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
           />
         </div>
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700">
-            description
+            Description
           </label>
           <textarea
             value={description}
-            onChange={(e) => setdescription(e.target.value)}
+            onChange={(e) => setDescription(e.target.value)}
             className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
           />
         </div>

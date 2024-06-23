@@ -8,11 +8,9 @@ const userModel = new mongoose.Schema(
     },
     email: {
       type: String,
-      required: true,
     },
     Description: {
       type: String,
-      required: true,
     },
     username: {
       type: String,
