@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BiSearchAlt2 } from "react-icons/bi";
+import { BiSearchAlt2, BiCog } from "react-icons/bi"; // Importing BiCog for settings icon
 import OtherUsers from "./OtherUsers";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -12,9 +12,11 @@ import {
 } from "../redux/userSlice";
 import { setMessages } from "../redux/messageSlice";
 import { BASE_URL } from "..";
+import Settings from "./Settings";
 
 const Sidebar = () => {
   const [search, setSearch] = useState("");
+  const [showSettings, setShowSettings] = useState(false);
   const { otherUsers } = useSelector((store) => store.user);
   const dispatch = useDispatch();
 
@@ -33,6 +35,7 @@ const Sidebar = () => {
       console.log(error);
     }
   };
+
   const searchSubmitHandler = (e) => {
     e.preventDefault();
     const conversationUser = otherUsers?.find((user) =>
@@ -44,6 +47,11 @@ const Sidebar = () => {
       toast.error("User not found!");
     }
   };
+
+  const toggleSettings = () => {
+    setShowSettings(!showSettings);
+  };
+
   return (
     <div className="border-r border-slate-500 p-4 flex flex-col">
       <form
@@ -62,13 +70,20 @@ const Sidebar = () => {
           <BiSearchAlt2 className="w-6 h-6 outline-none" />
         </button>
       </form>
+
       <div className="divider px-3"></div>
+
       <OtherUsers />
-      <div className="mt-2">
-        <button onClick={logoutHandler} className="btn btn-sm">
+
+      <div className="mt-auto">
+        <button onClick={logoutHandler} className="btn btn-sm w-full mb-2">
           Logout
         </button>
+        <button onClick={toggleSettings} className="btn btn-sm w-full">
+          <BiCog className="w-6 h-6 outline-none" />
+        </button>
       </div>
+      {showSettings && <Settings toggleProfileVisibility={toggleSettings} />}
     </div>
   );
 };

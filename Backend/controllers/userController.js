@@ -93,6 +93,7 @@ export const logout = (req, res) => {
     console.log(error);
   }
 };
+
 export const getOtherUsers = async (req, res) => {
   try {
     const loggedInUserId = req.id;
@@ -102,5 +103,27 @@ export const getOtherUsers = async (req, res) => {
     return res.status(200).json(otherUsers);
   } catch (error) {
     console.log(error);
+  }
+};
+export const updateUser = async (req, res) => {
+  const { fullName, email, description } = req.body;
+
+  try {
+    const userId = req.id; // Use req.id from middleware
+
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { fullName, email, description },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    return res.status(200).json({ user: updatedUser });
+  } catch (error) {
+    console.error("Error updating user:", error);
+    return res.status(500).json({ message: "Failed to update user" });
   }
 };
