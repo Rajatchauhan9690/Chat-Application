@@ -30,7 +30,7 @@ const Settings = ({ toggleProfileVisibility }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white p-6 rounded-md w-96">
+      <div className="bg-blue-100 p-6 rounded-md w-96">
         {/* Profile Avatar Section */}
         <div className="flex items-center mb-4">
           <img
@@ -39,41 +39,40 @@ const Settings = ({ toggleProfileVisibility }) => {
             className="w-16 h-16 rounded-full mr-4"
           />
           <div>
-            <h2 className="text-2xl">{authUser?.fullName || "Full Name"}</h2>
+            <h2 className="text-2xl text-black">
+              {authUser?.fullName || "Full Name"}
+            </h2>
           </div>
         </div>
 
-        {/* Profile Settings Form */}
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm font-medium text-black">
             Full Name
           </label>
           <input
             type="text"
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-white text-black"
           />
         </div>
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">
-            Email
-          </label>
+        <div className="mb-4 ">
+          <label className="block text-sm font-medium text-black">Email</label>
           <input
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-white text-black"
           />
         </div>
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm font-medium text-black">
             Description
           </label>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-white text-black"
           />
         </div>
         <div className="flex justify-end">

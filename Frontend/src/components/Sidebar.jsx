@@ -95,14 +95,14 @@ const Sidebar = () => {
             {/* Add other profile information as needed */}
           </div>
         )}
-        <button onClick={logoutHandler} className="btn btn-sm mb-2">
+        <button onClick={logoutHandler} className="btn btn-sm mb-2 w-full">
           Logout
         </button>
 
         {/* Settings Button with Icon */}
         <button
           onClick={toggleSettingsVisibility}
-          className="btn btn-sm mt-2 flex items-center"
+          className="btn btn-sm mt-2 flex items-center w-full"
         >
           <BiCog className="mr-1" style={{ fontSize: "1.5rem" }} />
           Settings
